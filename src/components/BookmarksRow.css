@@ -1,0 +1,14 @@
+tr:nth-child(odd) td:nth-child(3n+2),
+tr:nth-child(even) td:nth-child(3n+1) {
+    background-color: rgb(200, 255, 255);
+}
+
+tr:nth-child(odd) td:nth-child(3n+0),
+tr:nth-child(even) td:nth-child(3n+2) {
+    background-color: rgb(255, 200, 255);
+}
+
+tr:nth-child(odd) td:nth-child(3n+1),
+tr:nth-child(even) td:nth-child(3n+0) {
+    background-color: white;
+}
