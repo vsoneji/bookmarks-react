@@ -16,3 +16,7 @@ h1 {
   display: inline;
   margin: 0px;
 }
+
+.App {
+  height: max-content;
+}
