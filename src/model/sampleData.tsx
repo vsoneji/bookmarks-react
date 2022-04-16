@@ -6,6 +6,7 @@ export const sampleData: IBookmarkData = {
     panels: [
         {
             label: "Environments",
+            ignored: true,
             bookmarks: [
                 {
                     label: "Dev",
@@ -69,7 +70,7 @@ export const sampleData: IBookmarkData = {
                 label: "Citibank",
               },
               { url: "http://www.wellsfargo.com", label: "Wells Fargo" },
-              { url: "https://access1.sbc.com/", label: "AT&amp;T HR OneStop" },
+              { url: "https://access1.sbc.com/", label: "AT&T HR OneStop" },
               { url: "https://www.schwab.com/", label: "Charles Schwab" },
             ],
           },
@@ -188,6 +189,7 @@ export const sampleData: IBookmarkData = {
           },
           {
             label: "Cameras",
+            ignored: true,
             bookmarks: [
               { url: "http://vsoneji.ddns.net:91/", label: "Camera1" },
               { url: "http://vsoneji.ddns.net:93/", label: "Camera3" },
@@ -195,11 +197,11 @@ export const sampleData: IBookmarkData = {
             ],
           },
           {
-            label: "Local Dev",
+            label: "Development",
             bookmarks: [
               { url: "http://VSWIN10:3000/", label: "Git Gogs - vsWin10" },
               { url: "http://vswin10:9000", label: "Portainer - vsWin10" },
-              { url: "http://xps13:9000", label: "Portainer - xps13" },
+              { url: "http://www.github.com", label: "Github" },
               { url: "http://vswin10:8080", label: "Jenkins - vsWin10" },
             ],
           }      

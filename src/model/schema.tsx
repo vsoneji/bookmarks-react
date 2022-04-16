@@ -5,6 +5,7 @@ export interface IBookmark {
 
 export interface IBookmarkPanel {
     label: string;
+    ignored?: boolean;
     bookmarks: IBookmark[];
 }
 

@@ -1,17 +1,15 @@
 import { IBookmarkPanel } from "../model/schema";
-import BookmarkPanel from "./BookmarkPanel";
+import { BookmarkPanel } from "./BookmarkPanel";
 import "./BookmarksRow.css";
 
-function BookmarksRow({panels}: { panels: IBookmarkPanel[]}) {
+export const BookmarksRow: React.FunctionComponent<{
+    panels: IBookmarkPanel[];
+}> = ({ panels }) => {
     return (
         <tr className="BookmarksRow">
-        { 
-          panels.map(p => {
-            return (<BookmarkPanel panelData={p} />);
-          })
-        }
+            {panels.map((p) => {
+                return <BookmarkPanel panel={p} />;
+            })}
         </tr>
-    )
-}
-
-export default BookmarksRow;
+    );
+};
