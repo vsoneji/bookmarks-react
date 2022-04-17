@@ -7,16 +7,6 @@ body {
   background: rgb(220, 220, 220);
 }
 
-header {
-  margin: 0px;
-  /* background-color: coral; */
-}
-
-h1 {
-  display: inline;
-  margin: 0px;
-}
-
 .App {
   height: max-content;
 }
