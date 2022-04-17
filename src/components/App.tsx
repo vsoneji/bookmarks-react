@@ -6,7 +6,7 @@ import { sampleData } from "../model/sampleData";
 import { IBookmarkData, IBookmarkPanel } from "../model/schema";
 import { chunkArray } from "../utils/arrayUtils";
 import { BookmarksEditor } from "./BookmarksEditor";
-import { Toolbar } from "./Toolbar";
+import { BookmarkToolbar } from "./BookmarkToolbar";
 
 function App() {
     const [data] = useState<IBookmarkData>(sampleData);
@@ -22,8 +22,8 @@ function App() {
     }, [data]);
 
     return (
-        <div className="App">
-            <Toolbar title={data.title}/>
+        <>
+            <BookmarkToolbar title={data.title}/>
             <Routes>
                 <Route path="/" element={
                     <table className="BookmarkTable">
@@ -34,7 +34,7 @@ function App() {
                 } />
                 <Route path="edit" element={<BookmarksEditor />} />
             </Routes>
-        </div>
+        </>
     );
 }
 
