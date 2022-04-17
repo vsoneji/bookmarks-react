@@ -27,8 +27,8 @@ function App() {
             <Routes>
                 <Route path="/" element={
                     <table className="BookmarkTable">
-                        {rows.map((r) => (
-                            <BookmarksRow panels={r} />
+                        {rows.map((r, i) => (
+                            <BookmarksRow key={i} panels={r} />
                         ))}
                     </table>
                 } />

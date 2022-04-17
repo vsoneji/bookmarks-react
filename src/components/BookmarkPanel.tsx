@@ -9,8 +9,8 @@ export const BookmarkPanel: React.FunctionComponent<{
     return (
         <td className="BookmarkPanel">
             <span className="PanelHeading">{panel.label}</span>
-            {panel.bookmarks.map((b) => {
-                return <Bookmark bookmark={b} />;
+            {panel.bookmarks.map((b, i) => {
+                return <Bookmark key={i} bookmark={b} />;
             })}
         </td>
     );

@@ -7,8 +7,8 @@ export const BookmarksRow: React.FunctionComponent<{
 }> = ({ panels }) => {
     return (
         <tr className="BookmarksRow">
-            {panels.map((p) => {
-                return <BookmarkPanel panel={p} />;
+            {panels.map((p, i) => {
+                return <BookmarkPanel key={i} panel={p} />;
             })}
         </tr>
     );
