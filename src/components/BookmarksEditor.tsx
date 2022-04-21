@@ -1,17 +1,21 @@
 import React from 'react';
 import { JsonEditor as Editor } from 'jsoneditor-react';
 import 'jsoneditor-react/es/editor.min.css';
-import './BookmarksEditor.css';
 import { sampleData } from '../model/sampleData';
+import styled from 'styled-components';
+
+const BigEditor = styled.div`
+    height: 800px;
+`;
 
 export const BookmarksEditor: React.FunctionComponent = () => {
     return (
-        <div className="bigEditor">
+        <BigEditor>
             <Editor 
                 value={sampleData} 
                 mode="code" 
                 mainMenuBar={false}
             />
-        </div>
+        </BigEditor>
     )
 }
