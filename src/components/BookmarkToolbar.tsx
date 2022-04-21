@@ -1,5 +1,4 @@
 import React from "react";
-import "./BookmarkToolbar.css";
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import IconButton from '@mui/material/IconButton';

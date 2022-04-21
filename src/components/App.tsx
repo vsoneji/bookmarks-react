@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { BookmarksRow } from "./BookmarksRow";
 import { sampleData } from "../model/sampleData";
@@ -7,6 +6,13 @@ import { IBookmarkData, IBookmarkPanel } from "../model/schema";
 import { chunkArray } from "../utils/arrayUtils";
 import { BookmarksEditor } from "./BookmarksEditor";
 import { BookmarkToolbar } from "./BookmarkToolbar";
+import styled from 'styled-components';
+
+const BookmarkTable = styled.table`
+    border-spacing: 20px;
+
+
+`;
 
 function App() {
     const [data] = useState<IBookmarkData>(sampleData);
@@ -26,11 +32,11 @@ function App() {
             <BookmarkToolbar title={data.title}/>
             <Routes>
                 <Route path="/" element={
-                    <table className="BookmarkTable">
+                    <BookmarkTable>
                         {rows.map((r, i) => (
                             <BookmarksRow key={i} panels={r} />
                         ))}
-                    </table>
+                    </BookmarkTable>
                 } />
                 <Route path="edit" element={<BookmarksEditor />} />
             </Routes>
