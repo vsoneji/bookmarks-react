@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { sampleData } from '../model/sampleData';
+import React from 'react';
 import styled from 'styled-components';
 import JSONInput from 'react-json-editor-ajrm';
 
 // @ts-ignore
 import locale from 'react-json-editor-ajrm/locale/en';
 import { IBookmarkData } from '../model/schema';
-import { PropaneSharp } from '@mui/icons-material';
 
 const BigEditor = styled.div`
 
