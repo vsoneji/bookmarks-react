@@ -30,6 +30,7 @@ export const BookmarkPanel: React.FunctionComponent<{
 }> = ({ panel }) => {
 
     const [showEditor, setShowEditor] = useState<boolean>(false);
+    const [panelData, setPanelData] = useState(panel)
 
     const onEditorClick = () => {
         setShowEditor(true);
@@ -39,6 +40,7 @@ export const BookmarkPanel: React.FunctionComponent<{
         setShowEditor(false);
         console.log("Editor Save called");
         console.log(newData);
+        setPanelData(newData);
     };
 
     const onEditorCancel = () => {
@@ -55,13 +57,13 @@ export const BookmarkPanel: React.FunctionComponent<{
     return (
         <>
             <Panel onMouseDown={onMouseDown}>
-                <PanelHeading>{panel.label}</PanelHeading>
-                {panel.bookmarks.map((b, i) => {
+                <PanelHeading>{panelData.label}</PanelHeading>
+                {panelData.bookmarks.map((b, i) => {
                     return <Bookmark key={i} bookmark={b} />;
                 })}
             </Panel>
             <PanelEditor
-                panelData={panel}
+                panelData={panelData}
                 onSave={onEditorSave}
                 onCancel={onEditorCancel}
                 show={showEditor}

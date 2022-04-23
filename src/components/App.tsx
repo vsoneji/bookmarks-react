@@ -16,15 +16,9 @@ export const App: React.FunctionComponent = () => {
     const [data, setData] = useState<IBookmarkData>(sampleData);
     const [rows, setRows] = useState<IBookmarkPanel[][]>([]);
 
-    const jsonChangeHandler = (jsonObj: any) => {
+    const jsonChangeHandler = (newData: IBookmarkData) => {
         console.log(`json changed`);
-        try {
-            if (jsonObj) {
-                setData(jsonObj.jsObject as IBookmarkData);
-            }
-        } catch (error) {
-            console.error("Error when saving JSON");
-        }
+        setData(newData);
     };
 
     useEffect(() => {
