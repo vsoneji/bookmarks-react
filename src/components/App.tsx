@@ -7,32 +7,14 @@ import { chunkArray } from "../utils/arrayUtils";
 import { BookmarksEditor } from "./BookmarksEditor";
 import { BookmarkToolbar, ToolbarMode } from "./BookmarkToolbar";
 import styled from "styled-components";
-import Button from "@mui/material/Button";
-import { PanelEditor } from "./PanelEditor";
 
 const BookmarkTable = styled.table`
     border-spacing: 20px;
 `;
 
-function App() {
+export const App: React.FunctionComponent = () => {
     const [data, setData] = useState<IBookmarkData>(sampleData);
     const [rows, setRows] = useState<IBookmarkPanel[][]>([]);
-    const [showEditor, setShowEditor] = useState<boolean>(false);
-
-    const onEditorClick = () => {
-        setShowEditor(true);
-    };
-
-    const onEditorSave = (newData: IBookmarkPanel) => {
-        setShowEditor(false);
-        console.log(newData);
-        alert("Editor Save called");
-    };
-
-    const onEditorCancel = () => {
-        setShowEditor(false);
-        alert("Editor Cancel called");
-    };
 
     const jsonChangeHandler = (jsonObj: any) => {
         console.log(`json changed`);
@@ -46,6 +28,7 @@ function App() {
     };
 
     useEffect(() => {
+        document.title = data.title;
         const filteredPanels = data.panels.filter((p) => !p.ignored);
         const chunks: IBookmarkPanel[][] = chunkArray(
             filteredPanels,
@@ -72,15 +55,6 @@ function App() {
                                     ))}
                                 </tbody>
                             </BookmarkTable>
-                            <Button variant="outlined" onClick={onEditorClick}>
-                                Open form dialog
-                            </Button>
-                            <PanelEditor
-                                panelData={data.panels[3]}
-                                onSave={onEditorSave}
-                                onCancel={onEditorCancel}
-                                show={showEditor}
-                            />
                         </>
                     }
                 />
@@ -103,5 +77,3 @@ function App() {
         </>
     );
 }
-
-export default App;
