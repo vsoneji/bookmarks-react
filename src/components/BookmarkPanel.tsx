@@ -15,11 +15,6 @@ export const BookmarkPanel: React.FunctionComponent<IBookmarkPanelProps> = (
     const [showEditor, setShowEditor] = useState<boolean>(false);
     const [panelData, setPanelData] = useState(props.panel);
 
-    // eslint-disable-next-line
-    const onEditorClick = () => {
-        setShowEditor(true);
-    };
-
     const onEditorSave = (newData: IBookmarkPanel) => {
         setShowEditor(false);
         // console.log("Editor Save called");

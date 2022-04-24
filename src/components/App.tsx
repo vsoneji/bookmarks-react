@@ -1,30 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
 import { IBookmarkData, IBookmarkPanel } from "../model/schema";
 import { chunkArray } from "../utils/arrayUtils";
-import { GenericEditor } from "./GenericEditor";
-import { BookmarkToolbar, ToolbarMode } from "./BookmarkToolbar";
 import { BookmarkPanel } from "./BookmarkPanel";
 import { BookmarkRow, BookmarkTable } from "./styled.elements";
 import { readFromLocalStorage, saveToLocalStorage } from "../utils/dataUtils";
+import { FileEditor } from "./FileEditor";
+import EditIcon from '@mui/icons-material/Edit';
+import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
 
 export const App: React.FunctionComponent = () => {
     const [data, setData] = useState<IBookmarkData>(readFromLocalStorage());
     const [rows, setRows] = useState<IBookmarkPanel[][]>([]);
+    const [showEditor, setShowEditor] = useState<boolean>(false);
 
-    const jsonChangeHandler = (newData: IBookmarkData) => {
+    const onSaveHandler = (newData: IBookmarkData) => {
         console.log(`json changed`);
         setData(newData);
         saveToLocalStorage(newData);
+        setShowEditor(false);
     };
 
-    const panelJsonChangeHandler = (orig: IBookmarkPanel, changed: IBookmarkPanel) => {
+    const onCancelHandler = () => {
+        setShowEditor(false);
+    }
+
+    const handleEditIconClick = () => {
+        setShowEditor(true);
+    }
+
+    const panelJsonChangeHandler = (
+        orig: IBookmarkPanel,
+        changed: IBookmarkPanel
+    ) => {
         console.log(`JSON changed for panel: ${orig.label}`);
 
         const newData: IBookmarkData = {
             title: data.title,
             columns: data.columns,
-            panels: []
+            panels: [],
         };
 
         for (const p of data.panels) {
@@ -32,7 +45,7 @@ export const App: React.FunctionComponent = () => {
         }
         setData(newData);
         saveToLocalStorage(newData);
-    }
+    };
 
     useEffect(() => {
         document.title = data.title;
@@ -46,51 +59,41 @@ export const App: React.FunctionComponent = () => {
 
     return (
         <>
-            <Routes>
-                <Route
-                    path="/"
-                    element={
-                        <>
-                            <BookmarkToolbar
-                                title={data.title}
-                                mode={ToolbarMode.view}
-                            />
-                            <BookmarkTable>
-                                <tbody>
-                                    {rows.map((r, i) => (
-                                        <BookmarkRow key={i} >
-                                            {r.map((p, k) => {
-                                                return (
-                                                    <BookmarkPanel
-                                                        key={k}
-                                                        panel={p}
-                                                        onChange={panelJsonChangeHandler}
-                                                    />
-                                                );
-                                            })}
-                                        </BookmarkRow>
-                                    ))}
-                                </tbody>
-                            </BookmarkTable>
-                        </>
-                    }
+            <AppBar position="static">
+                <Toolbar variant="dense">
+                    <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={handleEditIconClick}>
+                        <EditIcon />
+                    </IconButton>
+                    <Typography variant="h6" color="inherit" component="div">
+                        {data.title}
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <BookmarkTable>
+                <tbody>
+                    {rows.map((r, i) => (
+                        <BookmarkRow key={i}>
+                            {r.map((p, k) => {
+                                return (
+                                    <BookmarkPanel
+                                        key={k}
+                                        panel={p}
+                                        onChange={
+                                            panelJsonChangeHandler
+                                        }
+                                    />
+                                );
+                            })}
+                        </BookmarkRow>
+                    ))}
+                </tbody>
+            </BookmarkTable>
+            <FileEditor 
+                data={data}
+                onSave={onSaveHandler}
+                show={showEditor}
+                onCancel={onCancelHandler}
                 />
-                <Route
-                    path="edit"
-                    element={
-                        <>
-                            <BookmarkToolbar
-                                title={data.title}
-                                mode={ToolbarMode.edit}
-                            />
-                            <GenericEditor
-                                data={data}
-                                onChange={jsonChangeHandler}
-                            />
-                        </>
-                    }
-                />
-            </Routes>
         </>
     );
 };
