@@ -31,7 +31,6 @@ export const PanelEditor: React.FunctionComponent<IPanelEditorProps> = (
     };
 
     const jsonChangeHandler = (newData: IBookmarkPanel) => {
-        console.log(`json changed`);
         setData(newData as IBookmarkPanel);
     };
 

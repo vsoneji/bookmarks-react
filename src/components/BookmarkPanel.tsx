@@ -22,7 +22,7 @@ export const BookmarkPanel: React.FunctionComponent<IBookmarkPanelProps> = (
 
     const onEditorSave = (newData: IBookmarkPanel) => {
         setShowEditor(false);
-        console.log("Editor Save called");
+        // console.log("Editor Save called");
         if (props.onChange) {
             props.onChange(panelData, newData);
         }
@@ -31,7 +31,7 @@ export const BookmarkPanel: React.FunctionComponent<IBookmarkPanelProps> = (
 
     const onEditorCancel = () => {
         setShowEditor(false);
-        console.log("Editor Cancel called");
+        // console.log("Editor Cancel called");
     };
 
     const onMouseDown: React.MouseEventHandler = (event) => {

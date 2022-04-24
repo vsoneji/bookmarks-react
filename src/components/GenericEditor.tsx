@@ -32,7 +32,8 @@ export const GenericEditor: React.FunctionComponent<Props> = (props) => {
             theme="dark_vscode_tribute"
             locale={locale}
             placeholder={props.data}
-            onChange={jsonChangeHandler}
+            onBlur={jsonChangeHandler}
+            confirmGood={false}
         />
     );
 };

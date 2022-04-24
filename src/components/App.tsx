@@ -17,6 +17,21 @@ export const App: React.FunctionComponent = () => {
         setData(newData);
     };
 
+    const panelJsonChangeHandler = (orig: IBookmarkPanel, changed: IBookmarkPanel) => {
+        console.log(`JSON changed for panel: ${orig.label}`);
+
+        const newData: IBookmarkData = {
+            title: data.title,
+            columns: data.columns,
+            panels: []
+        };
+
+        for (const p of data.panels) {
+            newData.panels.push(p.label === orig.label ? changed : p);
+        }
+        setData(newData);
+    }
+
     useEffect(() => {
         document.title = data.title;
         const filteredPanels = data.panels.filter((p) => !p.ignored);
@@ -47,6 +62,7 @@ export const App: React.FunctionComponent = () => {
                                                     <BookmarkPanel
                                                         key={k}
                                                         panel={p}
+                                                        onChange={panelJsonChangeHandler}
                                                     />
                                                 );
                                             })}
