@@ -1,19 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { IBookmark } from "../model/schema";
-
-export const BookmarkLink = styled.a`
-    :link,
-    :visited,
-    :active {
-        text-decoration: none;
-        color: blue;
-        white-space: nowrap;
-        display: block;
-        font-size: 12pt;
-        margin-left: 5px;
-    }
-`;
+import { BookmarkLink } from "./styled.elements";
 
 interface IBookmarkProps {
     bookmark: IBookmark;

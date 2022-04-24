@@ -5,42 +5,8 @@ import { IBookmarkData, IBookmarkPanel } from "../model/schema";
 import { chunkArray } from "../utils/arrayUtils";
 import { GenericEditor } from "./GenericEditor";
 import { BookmarkToolbar, ToolbarMode } from "./BookmarkToolbar";
-import styled from "styled-components";
 import { BookmarkPanel } from "./BookmarkPanel";
-
-const BookmarkTable = styled.table`
-    border-spacing: 20px;
-`;
-
-const BookmarkRow = styled.tr`
-    &:nth-child(odd) {
-        > * {
-            :nth-child(3n + 2) {
-                background-color: rgb(200, 255, 255);
-            }
-            :nth-child(3n + 0) {
-                background-color: rgb(255, 200, 255);
-            }
-            :nth-child(3n + 1) {
-                background-color: white;
-            }
-        }
-    }
-
-    &:nth-child(even) {
-        > * {
-            :nth-child(3n + 1) {
-                background-color: rgb(200, 255, 255);
-            }
-            :nth-child(3n + 2) {
-                background-color: rgb(255, 200, 255);
-            }
-            :nth-child(3n + 0) {
-                background-color: white;
-            }
-        }
-    }
-`;
+import { BookmarkRow, BookmarkTable } from "./styled.elements";
 
 export const App: React.FunctionComponent = () => {
     const [data, setData] = useState<IBookmarkData>(sampleData);
