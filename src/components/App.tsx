@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { sampleData } from "../model/sampleData";
 import { IBookmarkData, IBookmarkPanel } from "../model/schema";
 import { chunkArray } from "../utils/arrayUtils";
 import { GenericEditor } from "./GenericEditor";
 import { BookmarkToolbar, ToolbarMode } from "./BookmarkToolbar";
 import { BookmarkPanel } from "./BookmarkPanel";
 import { BookmarkRow, BookmarkTable } from "./styled.elements";
+import { readFromLocalStorage, saveToLocalStorage } from "../utils/dataUtils";
 
 export const App: React.FunctionComponent = () => {
-    const [data, setData] = useState<IBookmarkData>(sampleData);
+    const [data, setData] = useState<IBookmarkData>(readFromLocalStorage());
     const [rows, setRows] = useState<IBookmarkPanel[][]>([]);
 
     const jsonChangeHandler = (newData: IBookmarkData) => {
         console.log(`json changed`);
         setData(newData);
+        saveToLocalStorage(newData);
     };
 
     const panelJsonChangeHandler = (orig: IBookmarkPanel, changed: IBookmarkPanel) => {
@@ -30,6 +31,7 @@ export const App: React.FunctionComponent = () => {
             newData.panels.push(p.label === orig.label ? changed : p);
         }
         setData(newData);
+        saveToLocalStorage(newData);
     }
 
     useEffect(() => {

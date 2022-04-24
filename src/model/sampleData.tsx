@@ -1,31 +1,9 @@
 import { IBookmarkData } from "./schema";
 
 export const sampleData: IBookmarkData = {
-    title: "Vipul's Homepage",
+    title: "My Homepage",
     columns: 5,
     panels: [
-        {
-            label: "Environments",
-            ignored: true,
-            bookmarks: [
-                {
-                    label: "Dev",
-                    url: "https://devportal.prometheanproduct.com/"
-                },
-                {
-                    label: "Sandbox",
-                    url: "https://sandboxportal.prometheanproduct.com/"
-                },
-                {
-                    label: "Staging",
-                    url: "https://portal.staging.mypromethean.com/"
-                },
-                {
-                    label: "Prod",
-                    url: "https://portal.mypromethean.com/"
-                },
-            ]
-        },
         {
             label: "News",
             bookmarks: [
@@ -35,9 +13,7 @@ export const sampleData: IBookmarkData = {
               },
               { url: "http://www.cnn.com/", label: "CNN" },
               { url: "http://www.foxnews.com/", label: "Fox News" },
-              { url: "http://wsbradio.com", label: "WSB Radio" },
               { url: "http://www.drudgereport.com", label: "Drudge Report" },
-              { url: "http://wsbtv.com", label: "WSB TV" },
               { url: "http://news.google.com/", label: "Google News" },
             ],
           },
