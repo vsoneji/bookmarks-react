@@ -3,18 +3,26 @@ import styled from "styled-components";
 import { IBookmark } from "../model/schema";
 
 export const BookmarkLink = styled.a`
-    :link, :visited, :active {
+    :link,
+    :visited,
+    :active {
         text-decoration: none;
         color: blue;
         white-space: nowrap;
         display: block;
-        font-size: 12.0pt;
+        font-size: 12pt;
         margin-left: 5px;
     }
-`
+`;
 
-export const Bookmark: React.FunctionComponent<{ bookmark: IBookmark }> = ({
-    bookmark,
-}) => {
-    return <BookmarkLink href={bookmark.url}>{bookmark.label}</BookmarkLink>;
+interface IBookmarkProps {
+    bookmark: IBookmark;
+}
+
+export const Bookmark: React.FunctionComponent<IBookmarkProps> = (props) => {
+    return (
+        <BookmarkLink href={props.bookmark.url}>
+            {props.bookmark.label}
+        </BookmarkLink>
+    );
 };

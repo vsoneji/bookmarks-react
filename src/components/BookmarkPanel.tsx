@@ -25,13 +25,18 @@ const PanelHeading = styled.span`
     padding-top: 5px;
 `;
 
-export const BookmarkPanel: React.FunctionComponent<{
-    panel: IBookmarkPanel;
-}> = ({ panel }) => {
+interface IBookmarkPanelProps {
+    panel: IBookmarkPanel,
+    onChange?: (orig: IBookmarkPanel, changed: IBookmarkPanel) => void,
+}
+
+
+export const BookmarkPanel: React.FunctionComponent<IBookmarkPanelProps> = (props) => {
 
     const [showEditor, setShowEditor] = useState<boolean>(false);
-    const [panelData, setPanelData] = useState(panel)
+    const [panelData, setPanelData] = useState(props.panel)
 
+    // eslint-disable-next-line
     const onEditorClick = () => {
         setShowEditor(true);
     };
@@ -39,7 +44,9 @@ export const BookmarkPanel: React.FunctionComponent<{
     const onEditorSave = (newData: IBookmarkPanel) => {
         setShowEditor(false);
         console.log("Editor Save called");
-        console.log(newData);
+        if (props.onChange) {
+            props.onChange(panelData, newData);
+        }
         setPanelData(newData);
     };
 

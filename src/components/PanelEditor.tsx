@@ -6,7 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { BookmarksEditor } from "./BookmarksEditor";
+import { GenericEditor } from "./GenericEditor";
 
 interface IPanelEditorProps {
     panelData: IBookmarkPanel;
@@ -44,7 +44,7 @@ export const PanelEditor: React.FunctionComponent<IPanelEditorProps> = (
                 <DialogContentText>
                     Edit the bookmarks in a panel and click save
                 </DialogContentText>
-                <BookmarksEditor 
+                <GenericEditor 
                     data={data} 
                     onChange={jsonChangeHandler}                         
                     width='100%'

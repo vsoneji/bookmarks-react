@@ -16,13 +16,15 @@ interface Props {
     height?: string;
 }
 
-export const BookmarksEditor: React.FunctionComponent<Props> = (props) => {
+export const GenericEditor: React.FunctionComponent<Props> = (props) => {
 
     const jsonChangeHandler = (jsonObj: any) => {
-        console.log(`json changed`);
+        
         try {
             if (jsonObj && props.onChange) {
                 props.onChange(jsonObj.jsObject);
+            } else {
+                console.log(`json changed`);
             }
         } catch (error) {
             console.error("Error when saving JSON");

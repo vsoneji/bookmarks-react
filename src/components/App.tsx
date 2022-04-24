@@ -4,7 +4,7 @@ import { BookmarksRow } from "./BookmarksRow";
 import { sampleData } from "../model/sampleData";
 import { IBookmarkData, IBookmarkPanel } from "../model/schema";
 import { chunkArray } from "../utils/arrayUtils";
-import { BookmarksEditor } from "./BookmarksEditor";
+import { GenericEditor } from "./GenericEditor";
 import { BookmarkToolbar, ToolbarMode } from "./BookmarkToolbar";
 import styled from "styled-components";
 
@@ -60,7 +60,7 @@ export const App: React.FunctionComponent = () => {
                                 title={data.title}
                                 mode={ToolbarMode.edit}
                             />
-                            <BookmarksEditor
+                            <GenericEditor
                                 data={data}
                                 onChange={jsonChangeHandler}
                             />

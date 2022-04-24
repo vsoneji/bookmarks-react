@@ -11,7 +11,7 @@ export enum ToolbarMode {
     edit,
     view
 }
-interface Props {
+interface IBookmarksToolbarProps {
     title: string;
     mode: ToolbarMode,
 }
@@ -32,7 +32,7 @@ const BackViewIcon: React.FunctionComponent = () => {
     );
 }
 
-export const BookmarkToolbar: React.FunctionComponent<Props> = (props) => {
+export const BookmarkToolbar: React.FunctionComponent<IBookmarksToolbarProps> = (props) => {
     return (
         <AppBar position="static">
             <Toolbar variant="dense">
