@@ -30,7 +30,7 @@ export const BookmarkPanel: React.FunctionComponent<IBookmarkPanelProps> = (
     };
 
     const onMouseDown: React.MouseEventHandler = (event) => {
-        if (event.ctrlKey) {
+        if (event.altKey && event.ctrlKey) {
             setShowEditor(true);
         }
     };
