@@ -8,7 +8,7 @@ interface IBookmarkProps {
 
 export const Bookmark: React.FunctionComponent<IBookmarkProps> = (props) => {
     return (
-        <BookmarkLink href={props.bookmark.url}>
+        <BookmarkLink href={props.bookmark.url} target="_blank" rel="noreferrer noopener">
             {props.bookmark.label}
         </BookmarkLink>
     );
