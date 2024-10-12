@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/vsoneji/bookmarks-react/static/css/main.4efb37a3.css",
+    "main.js": "/vsoneji/bookmarks-react/static/js/main.eae8e550.js",
+    "static/js/206.ea318a44.chunk.js": "/vsoneji/bookmarks-react/static/js/206.ea318a44.chunk.js",
+    "service-worker.js": "/vsoneji/bookmarks-react/service-worker.js",
+    "index.html": "/vsoneji/bookmarks-react/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.4efb37a3.css",
+    "static/js/main.eae8e550.js"
+  ]
+}
