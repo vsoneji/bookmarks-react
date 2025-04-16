@@ -6,6 +6,7 @@ export interface IBookmark {
 export interface IBookmarkPanel {
     label: string;
     ignored?: boolean;
+    color?: string; // Added color property for customization
     bookmarks: IBookmark[];
 }
 
