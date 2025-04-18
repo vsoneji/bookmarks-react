@@ -18,7 +18,10 @@ export const BookmarksContainer = styled.div`
     width: 100%;
     padding: 10px; /* Reduced padding */
     background-color: ${darkTheme.background};
-    min-height: 100vh;
+    height: 100vh; // Use exact viewport height instead of min-height
+    overflow-y: overlay; // Changes to overlay which only shows scrollbar when needed
+    overflow-x: hidden;
+    box-sizing: border-box; // Include padding in height calculation
 `;
 
 export const BookmarksGrid = styled.div`
