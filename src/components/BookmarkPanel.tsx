@@ -4,7 +4,9 @@ import { Bookmark } from "./Bookmark";
 import { EnhancedPanelEditor } from "./EnhancedPanelEditor";
 import { BookmarkPanel as StyledPanel, PanelHeading, BookmarkList } from "./styled.elements";
 import { IconButton } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 // @ts-ignore - Ignoring type errors for react-beautiful-dnd
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
@@ -12,6 +14,8 @@ interface IBookmarkPanelProps {
     panel: IBookmarkPanel;
     onChange?: (orig: IBookmarkPanel, changed: IBookmarkPanel) => void;
     index: number; // Panel index for reference
+    onMoveUp?: (index: number) => void;
+    onMoveDown?: (index: number) => void;
 }
 
 export const BookmarkPanel: React.FunctionComponent<IBookmarkPanelProps> = (
@@ -33,23 +37,58 @@ export const BookmarkPanel: React.FunctionComponent<IBookmarkPanelProps> = (
     };
 
     return (
-        <>
+        <>            
             <StyledPanel>
                 <PanelHeading $bgColor={panelData.color}>
                     <span>{panelData.label}</span>
-                    <IconButton                        size="small"
-                        onClick={() => setShowEditor(true)}
-                        sx={{ 
-                            padding: '1px',
-                            color: 'rgba(255,255,255,0.7)',
-                            '&:hover': {
-                                color: 'rgba(255,255,255,0.9)',
-                                backgroundColor: 'rgba(255,255,255,0.1)'
-                            }
-                        }}
-                    >
-                        <EditIcon sx={{ fontSize: '16px' }} />
-                    </IconButton>
+                    <div className="panel-controls">
+                        {props.onMoveUp && (
+                            <IconButton 
+                                size="small"
+                                onClick={() => props.onMoveUp?.(props.index)}
+                                sx={{ 
+                                    padding: '1px',
+                                    color: 'rgba(255,255,255,0.7)',
+                                    '&:hover': {
+                                        color: 'rgba(255,255,255,0.9)',
+                                        backgroundColor: 'rgba(255,255,255,0.1)'
+                                    }
+                                }}
+                            >
+                                <ArrowUpwardIcon sx={{ fontSize: '16px' }} />
+                            </IconButton>
+                        )}
+                        {props.onMoveDown && (
+                            <IconButton 
+                                size="small"
+                                onClick={() => props.onMoveDown?.(props.index)}
+                                sx={{ 
+                                    padding: '1px',
+                                    color: 'rgba(255,255,255,0.7)',
+                                    '&:hover': {
+                                        color: 'rgba(255,255,255,0.9)',
+                                        backgroundColor: 'rgba(255,255,255,0.1)'
+                                    }
+                                }}
+                            >
+                                <ArrowDownwardIcon sx={{ fontSize: '16px' }} />
+                            </IconButton>
+                        )}
+                        <IconButton 
+                            size="small"
+                            onClick={() => setShowEditor(true)}
+                            sx={{ 
+                                padding: '1px',
+                                color: 'rgba(255,255,255,0.7)',
+                                '&:hover': {
+                                    color: 'rgba(255,255,255,0.9)',
+                                    backgroundColor: 'rgba(255,255,255,0.1)'
+                                }
+                            }}
+                        >
+                            <ColorLensIcon sx={{ fontSize: '16px' }} />
+                        </IconButton>
+                    </div>
                 </PanelHeading>
                 <Droppable droppableId={`bookmarks-${props.index}`} type="bookmark">
                     {(provided) => (

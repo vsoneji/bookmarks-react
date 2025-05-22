@@ -15,7 +15,7 @@ import {
     Grid
 } from '@mui/material';
 import { IBookmarkPanel, IBookmark } from '../model/schema';
-import EditIcon from '@mui/icons-material/Edit';
+import MenuIcon from '@mui/icons-material/Menu';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -218,8 +218,7 @@ export const EnhancedPanelEditor: React.FC<IEnhancedPanelEditorProps> = ({
                                                                 aria-label="edit"
                                                                 onClick={() => handleEditBookmark(index)}
                                                                 sx={{ color: '#666', mr: 1 }}
-                                                            >
-                                                                <EditIcon />
+                                                            >                                                                <MenuIcon />
                                                             </IconButton>
                                                             <IconButton
                                                                 edge="end"

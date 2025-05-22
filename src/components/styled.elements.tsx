@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DraggingStyle, NotDraggingStyle } from "react-beautiful-dnd";
 
 // Define dark theme colors
 const darkTheme = {
@@ -28,10 +29,16 @@ export const BookmarksContainer = styled.div`
 export const BookmarksGrid = styled.div<{ $columns?: number }>`
     display: grid;
     grid-template-columns: repeat(${props => props.$columns || 5}, minmax(180px, 1fr));
-    gap: 10px; /* Reduced gap */
+    gap: 10px;
     width: 100%;
     max-width: ${props => `calc(180px * ${props.$columns || 5} + 10px * ${(props.$columns || 5) - 1})`};
-    margin: 0; /* Left-align the grid instead of centering */
+    margin: 0;
+    
+    /* Basic panel container styling */
+    & > * {
+        min-width: 180px;
+        height: fit-content;
+    }
 `;
 
 // Panel component with standard background
@@ -40,14 +47,17 @@ export const BookmarkPanel = styled.div`
     border-radius: 6px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     padding: 8px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
     overflow: hidden;
-    max-width: 220px;
+    width: 100%;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
     height: 100%;
-    cursor: default; /* Changed from grab to default */
+    min-height: 50px;
     
     &:hover {
-        transform: translateY(-3px);
+        transform: translateY(-2px);
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
         background-color: ${darkTheme.cardHover};
     }
@@ -79,6 +89,18 @@ export const PanelHeading = styled.div<{ $bgColor?: string }>`
         // Use white text for dark backgrounds, black for light backgrounds
         return brightness > 0.5 ? '#000000' : '#ffffff';
     }};
+
+    .panel-controls {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    &:hover .panel-controls {
+        opacity: 1;
+    }
 `;
 
 export const ColorButton = styled.button`
@@ -106,8 +128,10 @@ export const ColorButton = styled.button`
 export const BookmarkList = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 2px; /* Minimal gap */
-    min-height: 10px; /* Ensure droppable area exists even when empty */
+    gap: 2px;
+    flex: 1;
+    min-height: 10px;
+    margin-top: 4px;
 `;
 
 export const BookmarkItem = styled.div`

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@mui/material';
+import { IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { IBookmarkPanel } from '../model/schema';
 import { EnhancedPanelEditor } from './EnhancedPanelEditor';
@@ -22,21 +22,19 @@ export const AddPanelButton: React.FC<AddPanelButtonProps> = ({ onAdd }) => {
 
     return (
         <>
-            <Button
-                variant="outlined"
-                startIcon={<AddIcon />}
+            <IconButton
+                color="inherit"
+                aria-label="add panel"
                 onClick={() => setOpen(true)}
-                sx={{
-                    color: '#fff',
-                    borderColor: 'rgba(255,255,255,0.3)',
+                sx={{ 
+                    padding: '4px',
                     '&:hover': {
-                        borderColor: 'rgba(255,255,255,0.8)',
                         backgroundColor: 'rgba(255,255,255,0.1)'
                     }
                 }}
             >
-                Add Panel
-            </Button>
+                <AddIcon fontSize="small" />
+            </IconButton>
 
             <EnhancedPanelEditor
                 show={open}

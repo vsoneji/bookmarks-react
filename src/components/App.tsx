@@ -5,7 +5,7 @@ import { BookmarksContainer, BookmarksGrid } from "./styled.elements";
 import { readFromLocalStorage, saveToLocalStorage } from "../utils/dataUtils";
 import { FileEditor } from "./FileEditor";
 import { AddPanelButton } from "./AddPanelButton";
-import EditIcon from '@mui/icons-material/Edit';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { AppBar, Toolbar, IconButton, Typography, createTheme, ThemeProvider } from "@mui/material";
 // @ts-ignore - Ignoring type errors for react-beautiful-dnd
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
@@ -83,11 +83,9 @@ export const App: React.FunctionComponent = () => {
             return;
         }
 
-        // Clone the current data to avoid mutating state directly
-        const newData = {...data};
-        
         // Handle dragging bookmarks within or between panels
         if (type === 'bookmark') {
+            const newData = {...data};
             // Extract panel indices from the droppableId format "bookmarks-{index}"
             const sourcePanelIdx = parseInt(source.droppableId.split('-')[1]);
             const destPanelIdx = parseInt(destination.droppableId.split('-')[1]);
@@ -151,7 +149,7 @@ export const App: React.FunctionComponent = () => {
             // Update the data and force a re-render
             setData(newData);
             saveToLocalStorage(newData);
-            setUpdateKey(prev => prev + 1); // Force re-render of the panels
+            setUpdateKey(prev => prev + 1);
         }
     };
 
@@ -162,31 +160,53 @@ export const App: React.FunctionComponent = () => {
     // Get non-ignored panels
     const visiblePanels = data.panels.filter(p => !p.ignored);
 
+    const handleMovePanel = (index: number, direction: 'up' | 'down') => {
+        const newIndex = direction === 'up' ? index - 1 : index + 1;
+        if (newIndex < 0 || newIndex >= visiblePanels.length) return;
+
+        // Get the actual panel indices from the full panels array
+        const fullPanelIndex = data.panels.findIndex(p => p.label === visiblePanels[index].label);
+        const targetPanelIndex = data.panels.findIndex(p => p.label === visiblePanels[newIndex].label);
+
+        const newPanels = [...data.panels];
+        [newPanels[fullPanelIndex], newPanels[targetPanelIndex]] = 
+        [newPanels[targetPanelIndex], newPanels[fullPanelIndex]];
+
+        const newData = {
+            ...data,
+            panels: newPanels
+        };
+
+        setData(newData);
+        saveToLocalStorage(newData);
+        setUpdateKey(prev => prev + 1);
+    };
+
     return (
         <ThemeProvider theme={darkTheme}>
             <AppBar position="static" color="primary" elevation={2}>
                 <Toolbar variant="dense" sx={{ minHeight: '48px', py: 0 }}>
-                    <IconButton 
-                        edge="start" 
-                        color="inherit" 
-                        aria-label="menu" 
-                        sx={{ mr: 1, padding: '4px' }} 
-                        onClick={handleEditIconClick}
-                    >
-                        <EditIcon fontSize="small" />
-                    </IconButton>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <IconButton 
+                            color="inherit" 
+                            aria-label="settings" 
+                            sx={{ padding: '4px' }} 
+                            onClick={handleEditIconClick}
+                        >
+                            <SettingsIcon fontSize="small" />
+                        </IconButton>
+                        <AddPanelButton onAdd={handleAddPanel} />
+                    </div>
                     <Typography 
                         variant="subtitle1" 
                         color="inherit" 
                         component="div" 
-                        sx={{ flexGrow: 1, fontSize: '15px' }}
+                        sx={{ flexGrow: 1, fontSize: '15px', ml: 1 }}
                     >
                         {data.title}
                     </Typography>
-                    <AddPanelButton onAdd={handleAddPanel} />
                 </Toolbar>
             </AppBar>
-            
             <DragDropContext onDragEnd={onDragEnd}>                
                 <BookmarksContainer>
                     <BookmarksGrid $columns={data.columns}>
@@ -196,6 +216,8 @@ export const App: React.FunctionComponent = () => {
                                 panel={panel}
                                 index={index}
                                 onChange={panelJsonChangeHandler}
+                                onMoveUp={index > 0 ? (idx) => handleMovePanel(idx, 'up') : undefined}
+                                onMoveDown={index < visiblePanels.length - 1 ? (idx) => handleMovePanel(idx, 'down') : undefined}
                             />
                         ))}
                     </BookmarksGrid>
