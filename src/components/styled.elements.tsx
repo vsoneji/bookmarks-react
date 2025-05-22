@@ -4,6 +4,7 @@ import styled from "styled-components";
 const darkTheme = {
     background: '#121212',
     cardBackground: '#1e1e1e',
+    cardHeaderBackground: '#353535', // New color for panel headers
     cardHover: '#2a2a2a',
     textPrimary: '#ffffff',
     textSecondary: '#b3b3b3',
@@ -62,7 +63,7 @@ export const PanelHeading = styled.div<{ $bgColor?: string }>`
     margin-bottom: 6px;
     padding: 4px 6px;
     border-radius: 4px;
-    background-color: ${props => props.$bgColor || 'transparent'};
+    background-color: ${props => props.$bgColor || darkTheme.cardHeaderBackground};
     color: ${props => {
         if (!props.$bgColor) return darkTheme.textPrimary;
         
@@ -138,13 +139,6 @@ export const BookmarkLink = styled.a`
 export const DraggableItem = styled.div`
     /* Base styles for draggable items */
     user-select: none;
-`;
-
-export const BookmarkIcon = styled.img`
-    width: 14px; /* Smaller icon */
-    height: 14px;
-    margin-right: 6px; /* Reduced margin */
-    border-radius: 2px;
 `;
 
 export const SearchBar = styled.div`

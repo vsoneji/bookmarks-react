@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { IBookmarkData, IBookmarkPanel, IBookmark } from "../model/schema";
+import { IBookmarkData, IBookmarkPanel } from "../model/schema";
 import { BookmarkPanel } from "./BookmarkPanel";
 import { BookmarksContainer, BookmarksGrid } from "./styled.elements";
 import { readFromLocalStorage, saveToLocalStorage } from "../utils/dataUtils";
 import { FileEditor } from "./FileEditor";
+import { AddPanelButton } from "./AddPanelButton";
 import EditIcon from '@mui/icons-material/Edit';
 import { AppBar, Toolbar, IconButton, Typography, createTheme, ThemeProvider } from "@mui/material";
 // @ts-ignore - Ignoring type errors for react-beautiful-dnd
@@ -25,8 +26,8 @@ const darkTheme = createTheme({
 
 export const App: React.FunctionComponent = () => {
     const [data, setData] = useState<IBookmarkData>(readFromLocalStorage());
-    const [filteredPanels, setFilteredPanels] = useState<IBookmarkPanel[]>([]);
     const [showEditor, setShowEditor] = useState<boolean>(false);
+    const [updateKey, setUpdateKey] = useState(0); // Add this to force re-render when needed
 
     const onSaveHandler = (newData: IBookmarkData) => {
         console.log(`json changed`);
@@ -42,6 +43,15 @@ export const App: React.FunctionComponent = () => {
     const handleEditIconClick = () => {
         setShowEditor(true);
     }
+
+    const handleAddPanel = (newPanel: IBookmarkPanel) => {
+        const newData: IBookmarkData = {
+            ...data,
+            panels: [...data.panels, newPanel]
+        };
+        setData(newData);
+        saveToLocalStorage(newData);
+    };
 
     const panelJsonChangeHandler = (
         orig: IBookmarkPanel,
@@ -81,13 +91,19 @@ export const App: React.FunctionComponent = () => {
             // Extract panel indices from the droppableId format "bookmarks-{index}"
             const sourcePanelIdx = parseInt(source.droppableId.split('-')[1]);
             const destPanelIdx = parseInt(destination.droppableId.split('-')[1]);
+
+            // Get visible panels (non-ignored)
+            const visiblePanels = data.panels.filter(p => !p.ignored);
             
-            // Use the filtered panels since those are the ones being displayed
-            const sourcePanel = filteredPanels[sourcePanelIdx];
-            const destPanel = filteredPanels[destPanelIdx];
+            // Find source and destination panels using the original unfiltered data
+            const sourcePanelIndex = data.panels.findIndex(p => p.label === visiblePanels[sourcePanelIdx].label);
+            const destPanelIndex = data.panels.findIndex(p => p.label === visiblePanels[destPanelIdx].label);
+            
+            const sourcePanel = data.panels[sourcePanelIndex];
+            const destPanel = data.panels[destPanelIndex];
             
             // Moving within the same panel
-            if (sourcePanelIdx === destPanelIdx) {
+            if (sourcePanelIndex === destPanelIndex) {
                 const newBookmarks = Array.from(sourcePanel.bookmarks);
                 const [removed] = newBookmarks.splice(source.index, 1);
                 newBookmarks.splice(destination.index, 0, removed);
@@ -99,8 +115,8 @@ export const App: React.FunctionComponent = () => {
                 };
                 
                 // Update the panel in the main data
-                newData.panels = newData.panels.map(p => 
-                    p.label === updatedPanel.label ? updatedPanel : p
+                newData.panels = data.panels.map((p, i) => 
+                    i === sourcePanelIndex ? updatedPanel : p
                 );
             } 
             // Moving between different panels
@@ -124,25 +140,27 @@ export const App: React.FunctionComponent = () => {
                     bookmarks: destBookmarks
                 };
                 
-                // Update the panels in the main data
-                newData.panels = newData.panels.map(p => {
-                    if (p.label === updatedSourcePanel.label) return updatedSourcePanel;
-                    if (p.label === updatedDestPanel.label) return updatedDestPanel;
+                // Update both panels in the main data
+                newData.panels = data.panels.map((p, i) => {
+                    if (i === sourcePanelIndex) return updatedSourcePanel;
+                    if (i === destPanelIndex) return updatedDestPanel;
                     return p;
                 });
             }
             
+            // Update the data and force a re-render
             setData(newData);
             saveToLocalStorage(newData);
+            setUpdateKey(prev => prev + 1); // Force re-render of the panels
         }
     };
 
-    // Get panels to display (all non-ignored panels)
     useEffect(() => {
         document.title = data.title;
-        // Show all non-ignored panels
-        setFilteredPanels(data.panels.filter(p => !p.ignored));
-    }, [data]);
+    }, [data.title]);
+
+    // Get non-ignored panels
+    const visiblePanels = data.panels.filter(p => !p.ignored);
 
     return (
         <ThemeProvider theme={darkTheme}>
@@ -165,15 +183,16 @@ export const App: React.FunctionComponent = () => {
                     >
                         {data.title}
                     </Typography>
+                    <AddPanelButton onAdd={handleAddPanel} />
                 </Toolbar>
             </AppBar>
             
-            <DragDropContext onDragEnd={onDragEnd}>                <BookmarksContainer>
-                    {/* Removed the Droppable wrapper for panels since we're not allowing panel rearrangement */}
+            <DragDropContext onDragEnd={onDragEnd}>                
+                <BookmarksContainer>
                     <BookmarksGrid $columns={data.columns}>
-                        {filteredPanels.map((panel, index) => (
+                        {visiblePanels.map((panel: IBookmarkPanel, index: number) => (
                             <BookmarkPanel
-                                key={`${panel.label}-${index}`}
+                                key={`${panel.label}-${index}-${updateKey}`}
                                 panel={panel}
                                 index={index}
                                 onChange={panelJsonChangeHandler}
