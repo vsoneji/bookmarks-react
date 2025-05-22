@@ -79,7 +79,8 @@ export const EnhancedPanelEditor: React.FC<IEnhancedPanelEditorProps> = ({
             label: label.trim(),
             color,
             bookmarks,
-            ignored: panelData?.ignored
+            ignored: panelData?.ignored,
+            sequence: isNew ? undefined : panelData?.sequence // Preserve existing sequence, new panels get sorted at the end
         };
         onSave(updatedPanel);
     };

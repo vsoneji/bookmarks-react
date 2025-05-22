@@ -34,7 +34,19 @@ export const FileEditor: React.FunctionComponent<IFileEditorProps> = (props) => 
     }
     
     const handleOk = () => {
-        props.onSave(data);
+        // Ensure sequence numbers are preserved when new data is saved
+        const updatedData = {
+            ...data,
+            panels: data.panels.map((panel, index) => {
+                // Try to find matching panel in old data to preserve sequence
+                const existingPanel = props.data.panels.find(p => p.label === panel.label);
+                return {
+                    ...panel,
+                    sequence: existingPanel?.sequence ?? panel.sequence
+                };
+            })
+        };
+        props.onSave(updatedData);
         setOpen(false);
     };
     

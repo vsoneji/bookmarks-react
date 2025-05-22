@@ -24,6 +24,27 @@ const darkTheme = createTheme({
   },
 });
 
+// Helper function to sort panels by sequence and physical order
+const sortPanels = (panels: IBookmarkPanel[]) => {
+    return [...panels].sort((a, b) => {
+        // If both panels have sequence numbers, use them
+        if (a.sequence !== undefined && b.sequence !== undefined) {
+            if (a.sequence !== b.sequence) {
+                return a.sequence - b.sequence;
+            }
+        }
+        // If only one panel has a sequence number, prioritize it
+        else if (a.sequence !== undefined) {
+            return -1;
+        }
+        else if (b.sequence !== undefined) {
+            return 1;
+        }
+        // Otherwise maintain physical order by using indexOf
+        return panels.indexOf(a) - panels.indexOf(b);
+    });
+};
+
 export const App: React.FunctionComponent = () => {
     const [data, setData] = useState<IBookmarkData>(readFromLocalStorage());
     const [showEditor, setShowEditor] = useState<boolean>(false);
@@ -157,24 +178,34 @@ export const App: React.FunctionComponent = () => {
         document.title = data.title;
     }, [data.title]);
 
-    // Get non-ignored panels
-    const visiblePanels = data.panels.filter(p => !p.ignored);
+    // Get non-ignored panels and sort them by sequence
+    const visiblePanels = sortPanels(data.panels.filter(p => !p.ignored));
 
     const handleMovePanel = (index: number, direction: 'up' | 'down') => {
         const newIndex = direction === 'up' ? index - 1 : index + 1;
         if (newIndex < 0 || newIndex >= visiblePanels.length) return;
 
-        // Get the actual panel indices from the full panels array
-        const fullPanelIndex = data.panels.findIndex(p => p.label === visiblePanels[index].label);
-        const targetPanelIndex = data.panels.findIndex(p => p.label === visiblePanels[newIndex].label);
-
-        const newPanels = [...data.panels];
-        [newPanels[fullPanelIndex], newPanels[targetPanelIndex]] = 
-        [newPanels[targetPanelIndex], newPanels[fullPanelIndex]];
+        const panel = visiblePanels[index];
+        const targetPanel = visiblePanels[newIndex];
+        
+        // Swap sequence numbers if they exist, otherwise create new ones
+        let newSequence = panel.sequence ?? visiblePanels.length;
+        let targetSequence = targetPanel.sequence ?? (direction === 'up' ? newSequence - 1 : newSequence + 1);
+        
+        // Create updated panels with swapped sequence numbers
+        const updatedPanels = data.panels.map(p => {
+            if (p.label === panel.label) {
+                return { ...p, sequence: targetSequence };
+            }
+            if (p.label === targetPanel.label) {
+                return { ...p, sequence: newSequence };
+            }
+            return p;
+        });
 
         const newData = {
             ...data,
-            panels: newPanels
+            panels: updatedPanels
         };
 
         setData(newData);
