@@ -12,6 +12,6 @@ export interface IBookmarkPanel {
 
 export interface IBookmarkData {
     title: string;
-    columns: number;
+    columns?: number;  // Optional, defaults to 5 if not specified
     panels: IBookmarkPanel[];
 }

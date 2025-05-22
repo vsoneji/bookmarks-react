@@ -24,12 +24,12 @@ export const BookmarksContainer = styled.div`
     box-sizing: border-box; // Include padding in height calculation
 `;
 
-export const BookmarksGrid = styled.div`
+export const BookmarksGrid = styled.div<{ $columns?: number }>`
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Narrower columns */
+    grid-template-columns: repeat(${props => props.$columns || 5}, minmax(180px, 1fr));
     gap: 10px; /* Reduced gap */
     width: 100%;
-    max-width: calc(180px * 5 + 10px * 4); /* Limit to 5 columns (5 columns + 4 gaps) */
+    max-width: ${props => `calc(180px * ${props.$columns || 5} + 10px * ${(props.$columns || 5) - 1})`};
     margin: 0; /* Left-align the grid instead of centering */
 `;
 

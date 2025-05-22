@@ -168,10 +168,9 @@ export const App: React.FunctionComponent = () => {
                 </Toolbar>
             </AppBar>
             
-            <DragDropContext onDragEnd={onDragEnd}>
-                <BookmarksContainer>
+            <DragDropContext onDragEnd={onDragEnd}>                <BookmarksContainer>
                     {/* Removed the Droppable wrapper for panels since we're not allowing panel rearrangement */}
-                    <BookmarksGrid>
+                    <BookmarksGrid $columns={data.columns}>
                         {filteredPanels.map((panel, index) => (
                             <BookmarkPanel
                                 key={`${panel.label}-${index}`}
