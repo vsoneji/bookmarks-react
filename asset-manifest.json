@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/bookmarks-react/static/css/main.4efb37a3.css",
-    "main.js": "/bookmarks-react/static/js/main.018f1e82.js",
+    "main.css": "/bookmarks-react/static/css/main.e890eafd.css",
+    "main.js": "/bookmarks-react/static/js/main.50a8289c.js",
     "static/js/206.ea318a44.chunk.js": "/bookmarks-react/static/js/206.ea318a44.chunk.js",
     "service-worker.js": "/bookmarks-react/service-worker.js",
     "index.html": "/bookmarks-react/index.html"
   },
   "entrypoints": [
-    "static/css/main.4efb37a3.css",
-    "static/js/main.018f1e82.js"
+    "static/css/main.e890eafd.css",
+    "static/js/main.50a8289c.js"
   ]
 }
