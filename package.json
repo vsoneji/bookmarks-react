@@ -11,8 +11,9 @@
     "build:github": "cross-env PUBLIC_URL=https://vsoneji.github.io/bookmarks-react/ react-scripts build",
     "build:sonejifamily": "cross-env PUBLIC_URL=https://www.sonejifamily.com/bookmarks/ react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "serve": "serve -s build"
+    "eject": "react-scripts eject",    
+    "serve": "serve -s build",
+    "create-zip": "node scripts/create-zip.js"
   },
   "eslintConfig": {
     "extends": [
@@ -67,6 +68,7 @@
     "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.3.6",
     "@types/styled-components": "^5.1.34",
+    "archiver": "^7.0.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.37.5",
