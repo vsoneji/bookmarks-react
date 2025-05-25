@@ -7,8 +7,7 @@ import { FileEditor } from "./FileEditor";
 import { AddPanelButton } from "./AddPanelButton";
 import SettingsIcon from '@mui/icons-material/Settings';
 import { AppBar, Toolbar, IconButton, Typography, createTheme, ThemeProvider } from "@mui/material";
-// @ts-ignore - Ignoring type errors for react-beautiful-dnd
-import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 
 // Create dark theme for Material UI components
 const darkTheme = createTheme({

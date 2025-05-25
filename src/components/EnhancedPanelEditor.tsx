@@ -18,7 +18,7 @@ import { IBookmarkPanel, IBookmark } from '../model/schema';
 import MenuIcon from '@mui/icons-material/Menu';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
 // Panel color options
 const panelColors = [

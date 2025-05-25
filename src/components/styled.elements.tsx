@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DraggingStyle, NotDraggingStyle } from "react-beautiful-dnd";
+import { DraggingStyle, NotDraggingStyle } from "@hello-pangea/dnd";
 
 // Define dark theme colors
 const darkTheme = {

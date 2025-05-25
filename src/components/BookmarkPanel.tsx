@@ -7,8 +7,7 @@ import { IconButton } from "@mui/material";
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-// @ts-ignore - Ignoring type errors for react-beautiful-dnd
-import { Droppable, Draggable } from "react-beautiful-dnd";
+import { Droppable, Draggable } from "@hello-pangea/dnd";
 
 interface IBookmarkPanelProps {
     panel: IBookmarkPanel;
